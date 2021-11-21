@@ -1,7 +1,10 @@
+import config from "./config";
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import axios from 'axios';
+
+const API_KEY = config.API_KEY;
 
 export default function App() {
 
@@ -10,7 +13,7 @@ export default function App() {
 
   useEffect(async () => {
     const client = axios.create({
-      baseURL: "https://www.yahoo.co.jp/",
+      baseURL: "https://api.openweathermap.org/data/2.5/weather?q=tokyo&appid=" + API_KEY
     });
     const data = await client.get("");
     console.log(data);
