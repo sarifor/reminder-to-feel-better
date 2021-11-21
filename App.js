@@ -12,10 +12,9 @@ export default function App() {
   const [ weather, setWeather ] = useState([]);
   const [ sentences, setSentences ] = useState("hi");
 
-  inputText = () => {
-    const text = document.TextInput.value;
+  /* const inputText = (text) => {
     setSentences(text);
-  };
+  }; */
 
   useEffect(async () => {
     const client = axios.create({
@@ -35,11 +34,12 @@ export default function App() {
       <Text>{sentences}</Text>
       <TextInput 
         style={styles.input}
+        onChangeText={text => setSentences(text)}
         placeholder="Please input sentences"
       />
       <Button
-        onPress={() => inputText}
         title="Save"
+        onPress={() => console.log(sentences)}
       />
 
       <StatusBar style="auto" />
