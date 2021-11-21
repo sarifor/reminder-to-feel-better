@@ -16,7 +16,8 @@ export default function App() {
       baseURL: "https://api.openweathermap.org/data/2.5/weather?q=tokyo&appid=" + API_KEY
     });
     const data = await client.get("");
-    console.log(data);
+    const parsedData = JSON.parse(data);
+    console.log(parsedData);
     // setWeather(data);
   }, []);
 
