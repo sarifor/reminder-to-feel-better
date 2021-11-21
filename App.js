@@ -9,7 +9,7 @@ const API_KEY = config.API_KEY;
 export default function App() {
 
   // state를 선언하고, 날씨 정보를 가져와서, 화면에 뿌리기
-  // const { weather, setWeather } = useState([]);
+  const [ weather, setWeather ] = useState([]);
 
   useEffect(async () => {
     const client = axios.create({
