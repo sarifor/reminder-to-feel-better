@@ -17,14 +17,14 @@ export default function App() {
     });
     const data = await client.get("");
     const parsedData = await data.data.weather[0].main;
-    console.log(parsedData);
-    // setWeather(data);
+    
+    setWeather(parsedData);
   }, []);
 
   return (
     <View style={styles.container}>
       <Text>Below is weather</Text>
-      {/*<Text>{weather}</Text>*/}
+      <Text>{weather}</Text>
       <StatusBar style="auto" />
     </View>
   );
