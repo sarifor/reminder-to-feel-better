@@ -7,14 +7,16 @@ import axios from 'axios';
 const API_KEY = config.API_KEY;
 
 export default function App() {
-
+  
   // state를 선언하고, 날씨 정보를 가져와서, 화면에 뿌리기
   const [ weather, setWeather ] = useState([]);
+  const [ text, setText ] = useState("");
   const [ sentences, setSentences ] = useState("hi");
 
-  /* const inputText = (text) => {
+  const inputText = () => {
     setSentences(text);
-  }; */
+    setText("");
+  };
 
   useEffect(async () => {
     const client = axios.create({
@@ -34,7 +36,9 @@ export default function App() {
       <Text>{sentences}</Text>
       <TextInput 
         style={styles.input}
-        onChangeText={text => setSentences(text)}
+        onChangeText={text => setText(text)}
+        onSubmitEditing={inputText} // 입력 후 엔터
+        value={text}
         placeholder="Please input sentences"
       />
       <Button
