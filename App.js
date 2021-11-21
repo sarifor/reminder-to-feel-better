@@ -37,13 +37,12 @@ export default function App() {
       <TextInput 
         style={styles.input}
         onChangeText={text => setText(text)}
-        onSubmitEditing={inputText} // 입력 후 엔터
         value={text}
         placeholder="Please input sentences"
       />
       <Button
         title="Save"
-        onPress={() => console.log(sentences)}
+        onPress={inputText}
       />
 
       <StatusBar style="auto" />
