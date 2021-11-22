@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const API_KEY = config.API_KEY;
 
@@ -13,8 +14,29 @@ export default function App() {
   const [ text, setText ] = useState("");
   const [ sentences, setSentences ] = useState("hi");
 
+  const setData = async (text) => {
+    try {
+      await AsyncStorage.setItem('textToSave', text)
+    } catch (e) {
+      console.log("Text was not saved")
+    }    
+  };
+
+  const getData = async () => {
+    try {
+      const savedText = await AsyncStorage.getItem('textToSave')
+      if (savedText !== null) {
+        console.log("Nothing saved yet")
+      }
+      return savedText;
+    } catch (e) {
+      console.log("Could not get text")
+    }
+  };  
+
   const inputText = () => {
     setSentences(text);
+    setData(text);
     setText("");
   };
 
@@ -24,8 +46,10 @@ export default function App() {
     });
     const data = await client.get("");
     const parsedData = await data.data.weather[0].main;
+    const savedText = getData;
     
     setWeather(parsedData);
+    setSentences(savedText);
   }, []);
 
   return (
