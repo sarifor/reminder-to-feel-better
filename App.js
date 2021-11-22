@@ -16,7 +16,7 @@ export default function App() {
 
   const setData = async (text) => {
     try {
-      await AsyncStorage.setItem('textToSave', text)
+      await AsyncStorage.setItem('textToSave', JSON.stringify(text))
     } catch (e) {
       console.log("Text was not saved")
     }    
@@ -25,10 +25,11 @@ export default function App() {
   const getData = async () => {
     try {
       const savedText = await AsyncStorage.getItem('textToSave')
-      if (savedText !== null) {
+      if (savedText === null) {
         console.log("Nothing saved yet")
       }
-      return savedText;
+      const jsonParsedText = JSON.parse(savedText);
+      return jsonParsedText;
     } catch (e) {
       console.log("Could not get text")
     }
@@ -46,7 +47,7 @@ export default function App() {
     });
     const data = await client.get("");
     const parsedData = await data.data.weather[0].main;
-    const savedText = getData;
+    const savedText = await getData();
     
     setWeather(parsedData);
     setSentences(savedText);
