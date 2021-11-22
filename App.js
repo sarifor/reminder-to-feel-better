@@ -4,8 +4,10 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Linking} from 'react-native'
 
 const API_KEY = config.API_KEY;
+const TEL_NUM = config.TEL_NUM;
 
 export default function App() {
   
@@ -51,10 +53,19 @@ export default function App() {
     console.log("Refreshed");
   };
 
+  const call = () => {
+    Linking.openURL('tel:' + TEL_NUM); // 전화를 거는 팝업까지만 뜨고, 발신은 되지 않음
+    console.log("calling!");    
+  }
+
   useEffect(async () => {
     const savedText = await getData();    
     setInterval(getWhether, 2000);    
     setSentences(savedText);
+
+    if (weather === "Rain" || weather === "Clouds") {
+      call();
+    };
   }, []);
 
   return (
@@ -74,7 +85,7 @@ export default function App() {
         title="Save"
         onPress={inputText}
       />
-
+      <Text onPress={call}>Call me</Text>
       <StatusBar style="auto" />
     </View>
   );
