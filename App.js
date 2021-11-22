@@ -62,10 +62,6 @@ export default function App() {
     const savedText = await getData();    
     setInterval(getWhether, 2000);    
     setSentences(savedText);
-
-    if (weather === "Rain" || weather === "Clouds") {
-      call();
-    };
   }, []);
 
   return (
@@ -73,7 +69,7 @@ export default function App() {
       <Text>Below is weather</Text>
       <Text>{weather}</Text>
       <Text>{weather === "Rain" ? "Raining" : "Not raining"}</Text>
-
+      {weather === "Rain" ? call() : console.log("No call")}
       <Text>{sentences}</Text>
       <TextInput 
         style={styles.input}
