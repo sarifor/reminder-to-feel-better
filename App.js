@@ -41,15 +41,19 @@ export default function App() {
     setText("");
   };
 
-  useEffect(async () => {
+  const getWhether = async () => {
     const client = axios.create({
       baseURL: "https://api.openweathermap.org/data/2.5/weather?q=tokyo&appid=" + API_KEY
     });
     const data = await client.get("");
     const parsedData = await data.data.weather[0].main;
-    const savedText = await getData();
-    
-    setWeather(parsedData);
+    setWeather(parsedData)    
+    console.log("Refreshed");
+  };
+
+  useEffect(async () => {
+    const savedText = await getData();    
+    setInterval(getWhether, 2000);    
     setSentences(savedText);
   }, []);
 
@@ -57,6 +61,7 @@ export default function App() {
     <View style={styles.container}>
       <Text>Below is weather</Text>
       <Text>{weather}</Text>
+      <Text>{weather === "Rain" ? "Raining" : "Not raining"}</Text>
 
       <Text>{sentences}</Text>
       <TextInput 
