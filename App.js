@@ -4,14 +4,12 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Linking} from 'react-native'
+import { Linking } from 'react-native'
 
 const API_KEY = config.API_KEY;
 const TEL_NUM = config.TEL_NUM;
 
 export default function App() {
-  
-  // state를 선언하고, 날씨 정보를 가져와서, 화면에 뿌리기
   const [ weather, setWeather ] = useState([]);
   const [ text, setText ] = useState("");
   const [ sentences, setSentences ] = useState("hi");
@@ -20,21 +18,21 @@ export default function App() {
     try {
       await AsyncStorage.setItem('textToSave', JSON.stringify(text))
     } catch (e) {
-      console.log("Text was not saved")
-    }    
+      console.log("Text was not saved");
+    };    
   };
 
   const getData = async () => {
     try {
-      const savedText = await AsyncStorage.getItem('textToSave')
+      const savedText = await AsyncStorage.getItem('textToSave');
       if (savedText === null) {
-        console.log("Nothing saved yet")
-      }
+        console.log("Nothing saved yet");
+      };
       const jsonParsedText = JSON.parse(savedText);
       return jsonParsedText;
     } catch (e) {
-      console.log("Could not get text")
-    }
+      console.log("Could not get text");
+    };
   };  
 
   const inputText = () => {
@@ -66,10 +64,10 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text>Below is weather</Text>
+      <Text>Below is current weather</Text>
       <Text>{weather}</Text>
       <Text>{weather === "Rain" ? "Raining" : "Not raining"}</Text>
-      {weather === "Rain" ? call() : console.log("No call")}
+
       <Text>{sentences}</Text>
       <TextInput 
         style={styles.input}
@@ -81,8 +79,15 @@ export default function App() {
         title="Save"
         onPress={inputText}
       />
-      <Text onPress={call}>Call me</Text>
+      
+      {weather === "Rain" ? call() : console.log("No call")}
+      <Button
+        title="Call"
+        onPress={call}
+      />
+
       <StatusBar style="auto" />
+
     </View>
   );
 }
